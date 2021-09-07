@@ -1,0 +1,85 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <!-- <script src=""></script> -->
+    <style>
+        label {
+            display: block;
+            font: 1rem 'Fira Sans', sans-serif;
+        }
+
+        input,
+        label {
+            margin: .4rem 0;
+            font-weight: 600;
+        }
+        #oldDate,input[type=date][name=current_date]{
+            height: 30px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Calculate Age / -->
+    <h3>Age Calculator</h3>
+    <label for="oldDate">Date of Birth </label>
+    <input type="date" name="oldDate" id="oldDate" height="30">
+    <label for="todayDate">Today:</label>
+    <input type="date" value="2021-9-5" name="current_date" height="30"> <br>
+    <button type="button" id="calculate" onclick="calculatediff()">Calculate</button>
+    <p id="calculatedData"></p>
+
+    <script>
+        var nowDate = new Date().toDateString();
+        function changeDateFormatAsYYMMDD(date){
+            console.log(date);
+            var newDate = '';
+            if (date != '' && date != undefined) {
+                var year = new Date(date).getFullYear();
+                var month = new Date(date).getMonth();
+                var day = new Date(date).getDate();
+                console.log(day+'/'+month+"/"+year);
+                
+                month = month <= 9 ? "0"+(month+1) : month+1;
+                day = day <= 9 ? "0"+day : day;
+                console.log(year+"-"+month+"-"+day);
+                newDate = year+"-"+month+"-"+day;
+                return newDate;
+            }
+        }
+        var currentDate = changeDateFormatAsYYMMDD(nowDate);
+        var currDateElm = document.querySelector('input[type="date"][name="current_date"]');
+            currDateElm.value = currentDate;
+        function calculatediff(){
+            var startDate = currDateElm.value;
+            var endDate = document.getElementById('oldDate').value;
+            console.log(startDate);
+            console.log(endDate);
+            var endTime = new Date(endDate).getTime();
+            var startTime = new Date(startDate).getTime();
+            var timeDiff = '';
+            if (endTime < startTime) {
+                timeDiff = startTime - endTime;
+            }else {
+                timeDiff = endTime - startTime;
+            }
+            console.log(timeDiff);
+            var years = Math.floor(timeDiff/(1000 * 3600 * 24*365)); // years
+            var days = Math.floor(timeDiff/(1000 * 3600 * 24)); // Days
+            var hours = Math.floor(timeDiff/(1000 * 3600)); // Days
+            var minutes = Math.floor(timeDiff/(1000*60)); // Days
+            var seconds = Math.floor(timeDiff/1000); // Days
+            var diffDate = new Date(timeDiff);
+            var diffInydhms = years +" years \n"+days +" days \n"+hours+" hours \n"+minutes+" minutes \n"+seconds+" seconds";
+            // var hours = diffDate.getHours(); // Days
+            // var minutes = diffDate.getMinutes(); // Days
+            // var seconds = diffDate.getSeconds(); // Days
+            document.getElementById('calculatedData').innerHTML = diffInydhms;
+            console.log(years +" years \n"+days +" days \n"+hours+" hours \n"+minutes+" minutes \n"+seconds+" seconds")
+        }
+    </script>
+</body>
+</html>
